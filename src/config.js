@@ -1,5 +1,5 @@
 module.exports = {
-    port: 2000,
+    port: 3000,
     IPv4: 'localhost',
     // agentSev: 'http://101.37.173.51', //php文件上传地址
     agentSev: 'http://192.168.2.11:1780',//家校通内网地址
