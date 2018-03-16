@@ -15,8 +15,6 @@ $screenSize: $screenBig;
 }
 
 body {
-    max-width: #{$screenBig}px;
     min-height: 100vh;
     margin: 0 auto;
-    // letter-spacing: 1px;
 }

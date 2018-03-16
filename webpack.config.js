@@ -53,15 +53,15 @@ module.exports = {
                     use: ['css-loader', 'sass-loader']
                 })
             },
-            {
-                test: /\.(jsx|scss|sass)$/,
-                loader: 'webpack-px-to-rem',
-                query: {
-                    basePx: 25,
-                    min: 1,
-                    floatWidth: 2
-                }
-            },
+            // {
+            //     test: /\.(jsx|scss|sass)$/,
+            //     loader: 'webpack-px-to-rem',
+            //     query: {
+            //         basePx: 25,
+            //         min: 1,
+            //         floatWidth: 2
+            //     }
+            // },
             {
                 test: /\.(png|jpg|gif|ico)$/,
                 loader: 'url-loader?limit=3000&name=img/[name][hash:5].[ext]'
