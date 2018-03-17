@@ -70,14 +70,15 @@ const selectResult = (location, cb) => {
 }
 
 const RouteConfig = (<Router history={hashHistory}>
+  <Route path='/login' getComponent={login}/>
   <Route path='/' getComponent={roots}>
-    <IndexRoute getComponent={login}/>
+    <IndexRoute getComponent={index}/>
+    <Route path='/select' getComponent={select}/>
+    <Route path='/selectResult' getComponent={selectResult}/>
+
     <Route path='/test' getComponent={test}/>
     <Route path='/test2' getComponent={test2}/>
     <Route path='/test3' getComponent={test3}/>
-    <Route path='/read' getComponent={read}/>
-    <Route path='/select' getComponent={select}/>
-    <Route path='/selectResult' getComponent={selectResult}/>
     <Route path='/error' getComponent={error}/>
     <Route path='*' getComponent={error}/>
   </Route>

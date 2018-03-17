@@ -1,5 +1,5 @@
 @import "quote.scss";
-$headerHeight: 128px;
+$headerHeight: 64px;
 $colorHeaderBg: #fff;
 
 .header {
@@ -10,32 +10,6 @@ $colorHeaderBg: #fff;
   z-index: 10;
   height: $headerHeight;
   background-color: #fff;
-  border-bottom: 1px solid #DDDDDD;
-  text-align: center;
-
-  .title {
-    display: inline-block;
-    padding-left: 91px;
-    margin-top: 24px;
-    background: url("../../Img/logo.png") no-repeat center left /79px;
-
-    h5 {
-      font-size: 30px;
-      line-height: 42px;
-      margin: 4px 0;
-      text-align: left;
-      font-weight: 400;
-    }
-
-    p {
-      font-size: 20px;
-      line-height: 28px;
-      text-align: left;
-    }
-  }
-
-  & + div {
-    padding-top: $headerHeight;
-    box-sizing: border-box;
-  }
+  -webkit-box-shadow: 0 1px 4px rgba(0,21,41,.08);
+  box-shadow: 0 1px 4px rgba(0,21,41,.08);
 }

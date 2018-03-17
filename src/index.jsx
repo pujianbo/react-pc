@@ -5,13 +5,13 @@ import route from './router';
 import store from './Redux/store';
 
 //引用样式
-// import './Scss/common/reset.scss'
+import './Scss/common/reset.scss'
 import './Scss/common/media.scss'
 import './Scss/common/public.scss'
 import './Scss/main.scss'
 
 //引入插件样式
-import 'antd/lib/button/style';
+// import 'antd/lib/button/style';
 
 
 //引入vconsole调试

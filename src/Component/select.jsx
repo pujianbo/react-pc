@@ -13,6 +13,7 @@ export default class write extends Component {
   //提交数据
   submit(key, e) {
     e.preventDefault();
+    hashh
   }
 
   render() {
