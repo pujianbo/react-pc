@@ -1,3 +1,11 @@
-body{
-  background-color: red;
+@import "quote.scss";
+
+.menu {
+  width: $menuWidth;
+  background-color: #fff;
+  position: fixed;
+  left: 0;
+  top: $headerHeight;
+  bottom: 0;
+  z-index: 10;
 }

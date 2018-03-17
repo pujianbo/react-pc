@@ -13,7 +13,7 @@ export default class roots extends Component {
             <div className='content'>
               <Header />
               <Menu />
-              {this.props.children}
+              <div className='publicbox'>{this.props.children}</div>
             </div>
         );
     }

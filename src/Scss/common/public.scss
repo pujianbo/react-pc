@@ -1,7 +1,15 @@
-//public
-body{
-  background-color: #eee;
+@import "quote.scss"; //public
+#main .publicbox {
+  position: fixed;
+  left: $menuWidth;
+  top: $headerHeight;
+  bottom: 0;
+  right: 0;
+  padding: 20px;
+  overflow: auto;
+  background-color: #f0f2f5;;
 }
+
 .task {
   position: fixed;
   left: 0;
