@@ -53,28 +53,24 @@ const login = (location, cb) => {
   }, 'login')
 }
 
-const read = (location, cb) => {
+const form = (location, cb) => {
   require.ensure([], require => {
-    cb(null, require('./Component/read').default)
-  }, 'read')
+    cb(null, require('./Component/form').default)
+  }, 'form')
 }
-const select = (location, cb) => {
+const datalist = (location, cb) => {
   require.ensure([], require => {
-    cb(null, require('./Component/select').default)
-  }, 'select')
+    cb(null, require('./Component/datalist').default)
+  }, 'datalist')
 }
-const selectResult = (location, cb) => {
-  require.ensure([], require => {
-    cb(null, require('./Component/selectResult').default)
-  }, 'selectResult')
-}
+
 
 const RouteConfig = (<Router history={hashHistory}>
   <Route path='/login' getComponent={login}/>
   <Route path='/' getComponent={roots}>
     <IndexRoute getComponent={index}/>
-    <Route path='/select' getComponent={select}/>
-    <Route path='/selectResult' getComponent={selectResult}/>
+    <Route path='/form' getComponent={form}/>
+    <Route path='/datalist' getComponent={datalist}/>
 
     <Route path='/test' getComponent={test}/>
     <Route path='/test2' getComponent={test2}/>

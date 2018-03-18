@@ -30,6 +30,7 @@ export default class login extends Component {
   //登录
   submit() {
     this.setState({loading: true});
+    sessionStorage.username='admin';
     hashHistory.push('/')
   }
 
