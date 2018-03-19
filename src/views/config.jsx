@@ -59,23 +59,14 @@ export default class datalist extends Component {
     return (<Form onSubmit={this.handleSubmit.bind(this)} style={{
         marginTop: '40px'
       }}>
-      <FormItem {...formItemLayout} label="名称">
+      <FormItem {...formItemLayout} label="网站名称">
         <Input/>
       </FormItem>
-      <FormItem {...formItemLayout} label="描述">
+      <FormItem {...formItemLayout} label="版权信息">
         <Input type="textarea"/>
       </FormItem>
-      <FormItem {...formItemLayout} label="选择">
-        <Select showSearch="showSearch" style={{
-            width: 200
-          }} placeholder="Select a person" optionFilterProp="children">
-          <Option value="jack">Jack</Option>
-          <Option value="lucy">Lucy</Option>
-          <Option value="tom">Tom</Option>
-        </Select>
-      </FormItem>
       <FormItem {...tailFormItemLayout}>
-        <Button type="primary" htmlType="submit">提交</Button>
+        <Button type="primary" htmlType="submit">修改</Button>
       </FormItem>
     </Form>);
   }

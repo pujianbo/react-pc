@@ -24,6 +24,16 @@ const error = (location, cb) => {
     cb(null, require('./Component/Common/error').default)
   }, 'error')
 }
+const form = (location, cb) => {
+  require.ensure([], require => {
+    cb(null, require('./Component/form').default)
+  }, 'form')
+}
+const datalist = (location, cb) => {
+  require.ensure([], require => {
+    cb(null, require('./Component/datalist').default)
+  }, 'datalist')
+}
 // 测试组件
 const test = (location, cb) => {
   require.ensure([], require => {
@@ -40,35 +50,48 @@ const test3 = (location, cb) => {
     cb(null, require('./Component/test3').default)
   }, 'test3')
 }
-// 路由组件
+// 页面组件
 const index = (location, cb) => {
   require.ensure([], require => {
-    cb(null, require('./Component/index').default)
+    cb(null, require('./views/index').default)
   }, 'index')
 }
-// 页面组件
 const login = (location, cb) => {
   require.ensure([], require => {
-    cb(null, require('./Component/login').default)
+    cb(null, require('./views/login').default)
   }, 'login')
 }
-
-const form = (location, cb) => {
+const config = (location, cb) => {
   require.ensure([], require => {
-    cb(null, require('./Component/form').default)
-  }, 'form')
+    cb(null, require('./views/config').default)
+  }, 'config')
 }
-const datalist = (location, cb) => {
+const datalog = (location, cb) => {
   require.ensure([], require => {
-    cb(null, require('./Component/datalist').default)
-  }, 'datalist')
+    cb(null, require('./views/datalog').default)
+  }, 'datalog')
 }
-
+const role = (location, cb) => {
+  require.ensure([], require => {
+    cb(null, require('./views/role').default)
+  }, 'role')
+}
+const users = (location, cb) => {
+  require.ensure([], require => {
+    cb(null, require('./views/users').default)
+  }, 'users')
+}
 
 const RouteConfig = (<Router history={hashHistory}>
   <Route path='/login' getComponent={login}/>
   <Route path='/' getComponent={roots}>
     <IndexRoute getComponent={index}/>
+    <Route path='/config' getComponent={config}/>
+    <Route path='/datalog' getComponent={datalog}/>
+    <Route path='/role' getComponent={role}/>
+    <Route path='/users' getComponent={users}/>
+
+
     <Route path='/form' getComponent={form}/>
     <Route path='/datalist' getComponent={datalist}/>
 

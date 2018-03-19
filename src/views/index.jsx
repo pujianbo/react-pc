@@ -1,6 +1,5 @@
 'use strict';
 import React, {Component} from 'react'
-import '../Scss/index.scss'
 
 export default class index extends Component {
   render() {

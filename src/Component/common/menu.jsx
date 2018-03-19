@@ -6,14 +6,20 @@ const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 import '../../Scss/Common/menu.scss'
 
-const routeArr=['/form','/datalist']
+let routeArr=['/form','/datalist']
 
 export default class menu extends Component {
   constructor(props) {
     super(props);
+    routeArr[12]='/config'
+    routeArr[13]='/role'
+    routeArr[14]='/users'
+    routeArr[15]='/datalog'
+    console.log(hashHistory.getCurrentLocation().pathname);
   }
 
   handleClick(e) {
+    console.log(e);
     if(routeArr[e.key])
       hashHistory.push(routeArr[e.key])
   }
@@ -22,7 +28,7 @@ export default class menu extends Component {
       <div className='menubox'>
         <Menu onClick={this.handleClick.bind(this)} defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']} mode="inline">
           <SubMenu key="sub1" title={<span> <Icon type="team" /><span>医站管理</span></span>}>
-            <Menu.Item key="0">表单提交</Menu.Item>
+            <Menu.Item key="0" url='test'>表单提交</Menu.Item>
             <Menu.Item key="1">数据列表</Menu.Item>
             <Menu.Item key="2">医生列表</Menu.Item>
             <Menu.Item key="3">医生列表</Menu.Item>
@@ -43,8 +49,8 @@ export default class menu extends Component {
           <SubMenu key="sub5" title={<span> <Icon type="setting" /><span>系统管理</span></span>}>
             <Menu.Item key="11">网站配置</Menu.Item>
             <Menu.Item key="12">角色管理</Menu.Item>
-            <Menu.Item key="14">用户管理</Menu.Item>
-            <Menu.Item key="13">系统帮助</Menu.Item>
+            <Menu.Item key="13">用户管理</Menu.Item>
+            <Menu.Item key="14">系统日志</Menu.Item>
           </SubMenu>
         </Menu>
       </div>

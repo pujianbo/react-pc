@@ -1,84 +1,84 @@
-'use strict';
 import React, {Component} from 'react'
-import {Button, Dialog, Page} from 'react-weui';
-import {Tips, ajax} from '../tools'
+import { Table } from 'antd';
+// import reqwest from 'reqwest';
 
+const columns = [{
+  title: 'Name',
+  dataIndex: 'name',
+  sorter: true,
+  render: name => `${name.first} ${name.last}`,
+  width: '20%',
+}, {
+  title: 'Gender',
+  dataIndex: 'gender',
+  filters: [
+    { text: 'Male', value: 'male' },
+    { text: 'Female', value: 'female' },
+  ],
+  width: '20%',
+}, {
+  title: 'Email',
+  dataIndex: 'email',
+}];
 
-//ui
-import 'weui';
-import 'react-weui/build/packages/react-weui.css';
-
-export default class test extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      showIOS1: false,
-      showIOS2: false,
-      showAndroid1: false,
-      showAndroid2: false,
-      style1: {
-        buttons: [
-          {
-            label: 'Ok',
-            onClick: this.hideDialog.bind(this)
-          }
-        ]
-      },
-      style2: {
-        title: 'Heading',
-        buttons: [
-          {
-            type: 'default',
-            label: 'Cancel',
-            onClick: this.hideDialog.bind(this)
-          }, {
-            type: 'primary',
-            label: 'Ok',
-            onClick: this.hideDialog.bind(this)
-          }
-        ]
-      }
-    }
+export default class datalist extends Component {
+constructor(){
+  super();
+  this.state = {
+    data: [],
+    pagination: {},
+    loading: false,
+  };
+}
+  handleTableChange(pagination, filters, sorter){
+    const pager = { ...this.state.pagination };
+    pager.current = pagination.current;
+    this.setState({
+      pagination: pager,
+    });
+    this.fetch({
+      results: pagination.pageSize,
+      page: pagination.current,
+      sortField: sorter.field,
+      sortOrder: sorter.order,
+      ...filters,
+    });
   }
-  componentDidMount(){
-    console.log(23);
-    ajax({
-      url: '/addimgstoword/',
+  fetch(params = {}){
+    console.log('params:', params);
+    this.setState({ loading: true });
+    fetch('https://randomuser.me/api',{
+      url: 'https://randomuser.me/api',
+      method: 'get',
       data: {
-        id: 23
+        results: 10,
+        ...params,
       },
-      success: (res => {
-        console.log(res);
-      })
-    })
+      type: 'json',
+    }).then((data) => {
+      const pagination = { ...this.state.pagination };
+      // Read total count from server
+      // pagination.total = data.totalCount;
+      pagination.total = 200;
+      this.setState({
+        loading: false,
+        data: data.results,
+        pagination,
+      });
+    });
   }
-
-  hideDialog() {
-    this.setState({showIOS1: false, showIOS2: false, showAndroid1: false, showAndroid2: false});
+  componentDidMount() {
+    this.fetch();
   }
-
   render() {
-    return (<div className='test clearfix'>
-      <Page className="dialog" title="Dialog" subTitle="对话框" spacing="spacing">
-        <Button type="default" onClick={e => this.setState({showIOS1: true})}>iOS Style1</Button>
-        <Button type="default" onClick={e => this.setState({showIOS2: true})}>iOS Style2</Button>
-        <Button type="default" onClick={e => this.setState({showAndroid1: true})}>Android Style1</Button>
-        <Button type="default" onClick={e => this.setState({showAndroid2: true})}>Android Style2</Button>
-
-        <Dialog type="ios" title={this.state.style1.title} buttons={this.state.style1.buttons} show={this.state.showIOS1}>
-          This is iOS Style 1
-        </Dialog>
-        <Dialog type="ios" title={this.state.style2.title} buttons={this.state.style2.buttons} show={this.state.showIOS2}>
-          This is iOS Style 2
-        </Dialog>
-
-        <Dialog type="android" title={this.state.style1.title} buttons={this.state.style1.buttons} show={this.state.showAndroid1}>
-          This is Android Style 1
-        </Dialog>
-        <Dialog type="android" title={this.state.style2.title} buttons={this.state.style2.buttons} show={this.state.showAndroid2}>
-          This is Android Style 2
-        </Dialog>
-      </Page>
-    </div>)
+    return (
+      <Table columns={columns}
+        rowKey={record => record.registered}
+        dataSource={this.state.data}
+        pagination={this.state.pagination}
+        loading={this.state.loading}
+        onChange={this.handleTableChange}
+      />
+    );
   }
 }

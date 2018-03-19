@@ -2,8 +2,7 @@
 import React, {Component} from 'react'
 import {hashHistory} from 'react-router'
 
-import {Input, Icon, Button, Form} from 'antd';
-import '../Scss/login.scss'
+import {Input, Icon, Button, Form, message} from 'antd';
 
 import imgLogo from '../Img/Icon/logo.png'
 
@@ -24,13 +23,25 @@ export default class login extends Component {
   }
   onChange(e) {
     const vName = {};
-    vName[e.target.name] = e.target.value;
+    vName[e.target.name] = e.target.value.replace(/\s/g, '');
     this.setState(vName);
   }
   //登录
-  submit() {
+  submit(e) {
+    e.preventDefault();
     this.setState({loading: true});
-    sessionStorage.username='admin';
+    const {userName, password} = this.state;
+    if (userName == '' || password == '') {
+      message.warning(
+        `请输入${userName
+        ? '密码'
+        : '用户名'}`);
+      setTimeout(() => {
+        this.setState({loading: false});
+      }, 1000)
+      return
+    }
+    sessionStorage.username = 'admin';
     hashHistory.push('/')
   }
 
@@ -45,7 +56,8 @@ export default class login extends Component {
     return (<div className='login clearfix'>
       <Form onSubmit={this.submit.bind(this)} className="loginbox">
         <div className='item logobox'>
-          <img src={imgLogo} /><span>康医生后端管理系统</span>
+          <img src={imgLogo}/>
+          <span>康医生后端管理系统</span>
         </div>
         <div className='item'>
           <Input placeholder="输入账户名" prefix={<Icon type = "user" />} suffix={suffixName} name='userName' value={userName} onChange={this.onChange.bind(this)} ref={node => this.userNameInput = node}/></div>
@@ -55,7 +67,7 @@ export default class login extends Component {
         <div className='item'>
           <Button type="primary" htmlType="submit" style={{
               width: '100%'
-            }} loading={loading}>登 录</Button>
+            }} disabled={loading}>登 录</Button>
         </div>
       </Form>
     </div>)
