@@ -1,17 +1,32 @@
 import React, {Component} from 'react'
-import {Table, Button, Modal} from 'antd';
+import {Link} from 'react-router'
+import {
+  Table,
+  Button,
+  Modal,
+  Form,
+  Input,
+  RangePicker,
+  Select
+} from 'antd';
+import moment from 'moment';
+const {MonthPicker, RangePicker} = DatePicker;
 
+const dateFormat = 'YYYY/MM/DD';
+const monthFormat = 'YYYY/MM';
+const FormItem = Form.Item;
+const Option = Select.Option;
 const data = [];
 for (let i = 1; i <= 46; i++) {
   if (i < 10)
     i = '0' + i;
   data.push({
     key: i,
-    index: i,
-    name: '张斌超',
+    name: '张斌超' + i,
     phone: 15928287799,
-    keshi: '儿科',
-    zhicheng: '专家',
+    hosp: '北京市二医院',
+    createtime: '2018.01.07 17:54:34',
+    logintime: '2018.01.07 17:54:34',
     status: '正常'
   });
 }
@@ -56,20 +71,20 @@ export default class datalist extends Component {
     };
     this.columns = [
       {
-        title: '序号',
-        dataIndex: 'index'
-      }, {
-        title: '用户名',
+        title: '昵称',
         dataIndex: 'name'
       }, {
         title: '手机号',
         dataIndex: 'phone'
       }, {
-        title: '科室',
-        dataIndex: 'keshi'
+        title: '医院',
+        dataIndex: 'hosp'
       }, {
-        title: '职称',
-        dataIndex: 'zhicheng'
+        title: '创建时间',
+        dataIndex: 'createtime'
+      }, {
+        title: '登录时间',
+        dataIndex: 'logintime'
       }, {
         title: '状态',
         dataIndex: 'status'
@@ -77,8 +92,9 @@ export default class datalist extends Component {
         title: '操作',
         key: 'action',
         render: (txt, record) => (<span className='links'>
-          <a onClick={this.edit.bind(this, txt, 0)}>编辑</a>
-          <a onClick={this.edit.bind(this, txt, 1)}>删除</a>
+          <Link title='查看详情' to='/userdetail/23'><Icon type="info-circle"/></Link>
+          <a title='冻结账户' onClick={this.edit.bind(this, txt, 0)}><Icon type="lock"/></a>
+          <a title='删除账户' onClick={this.edit.bind(this, txt, 1)}><Icon type="delete"/></a>
         </span>)
       }
     ];
@@ -106,8 +122,9 @@ export default class datalist extends Component {
       });
     }
   }
-  deleteSlt() {
-    console.log(this.selectedRowKeys);
+  //批量操作
+  handleSlt(e) {
+    console.log(e.target.innerText);
     Modal.confirm({
       title: '你确定要删除所选记录?',
       content: `选择项：${this.selectedRowKeys.join(',')}`,
@@ -122,13 +139,43 @@ export default class datalist extends Component {
       }
     });
   }
+  //选择状态
+  sltStatus(value) {
+    console.log(`selected ${value}`);
+  }
   render() {
     const {data, pagination, loading, rowSelection, dltdisabled} = this.state
     return (<div>
-      <div className='frmbtntop'>
-        <Button type="danger" disabled={dltdisabled} onClick={this.deleteSlt.bind(this)}>批量删除</Button>
+      <Form className='frmbtntop'>
+        <Button type="danger" disabled={dltdisabled} onClick={this.handleSlt.bind(this)}>批量删除</Button>
+        <Button type="danger" disabled={dltdisabled} onClick={this.handleSlt.bind(this)}>批量冻结</Button>
+        <Button type="danger" disabled={dltdisabled} onClick={this.handleSlt.bind(this)}>批量解冻</Button>
         <Button>新建用户</Button>
-      </div>
+      </Form>
+      <Form className='frmbtntop' layout="inline">
+        <FormItem label="昵称">
+          <Input placeholder='搜索昵称或姓名'/>
+        </FormItem>
+        <FormItem label="手机号">
+          <Input placeholder='搜索手机号' maxLength='11'/>
+        </FormItem>
+        <FormItem label="医院">
+          <Input placeholder='搜索医院'/>
+        </FormItem>
+        <FormItem label="创建时间">
+          <RangePicker/>
+        </FormItem>
+        <FormItem label="登录时间">
+          <RangePicker/>
+        </FormItem>
+        <FormItem label="账号状态">
+          <Select defaultValue="lucy" onChange={this.sltStatus.bind(this)}>
+            <Option value="lucy">未激活</Option>
+            <Option value="Yiminghe">正常</Option>
+            <Option value="jack">冻结</Option>
+          </Select>
+        </FormItem>
+      </Form>
       <Table rowSelection={rowSelection} columns={this.columns} dataSource={data} pagination={pagination} loading={loading} onChange={this.handleTableChange.bind(this)}/>
     </div>)
   }

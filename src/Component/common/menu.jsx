@@ -18,6 +18,12 @@ export default class menu extends Component {
     return (<div className='menu clearfix'>
       <div className='menubox'>
         <Menu onClick={this.handleClick.bind(this)} defaultOpenKeys={[localStorage.syskeyPath]} defaultSelectedKeys={[defaultKey]} mode="inline">
+          <SubMenu key="team" title={<span> <Icon type="team" /><span>账户管理</span></span>}>
+            <Menu.Item key="user/">普通账户</Menu.Item>
+            <Menu.Item key="user/doc">医生账户</Menu.Item>
+            <Menu.Item key="user/hosp">医院账户</Menu.Item>
+            <Menu.Item key="user/admin">后台账户</Menu.Item>
+          </SubMenu>
           <SubMenu key="sys" title={<span> <Icon type="setting" /><span>系统管理</span></span>}>
             <Menu.Item key="config">网站配置</Menu.Item>
             <Menu.Item key="role">角色管理</Menu.Item>
@@ -32,7 +38,7 @@ export default class menu extends Component {
             <Menu.Item key="9">用户新增分析</Menu.Item>
             <Menu.Item key="10">模块使用分析</Menu.Item>
           </SubMenu>
-          <SubMenu key="doctor" title={<span> <Icon type="team" /><span>模板使用</span></span>}>
+          <SubMenu key="doctor" title={<span> <Icon type="star" /><span>模板使用</span></span>}>
             <Menu.Item key="form">表单提交</Menu.Item>
             <Menu.Item key="datalist">数据列表</Menu.Item>
           </SubMenu>

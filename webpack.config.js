@@ -102,7 +102,7 @@ module.exports = {
             chunks: ['index'],
             inject: 'body',
             hash: true,
-            title: '首页',
+            title: '康医生后端管理系统',
             keywords: '关键字',
             description: '网站描述',
             publicPath: publicPath

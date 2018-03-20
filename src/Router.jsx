@@ -61,6 +61,11 @@ const login = (location, cb) => {
     cb(null, require('./views/login').default)
   }, 'login')
 }
+const pwdfind = (location, cb) => {
+  require.ensure([], require => {
+    cb(null, require('./views/pwdfind').default)
+  }, 'pwdfind')
+}
 const config = (location, cb) => {
   require.ensure([], require => {
     cb(null, require('./views/config').default)
@@ -76,29 +81,56 @@ const role = (location, cb) => {
     cb(null, require('./views/role').default)
   }, 'role')
 }
-const users = (location, cb) => {
+const user = (location, cb) => {
   require.ensure([], require => {
-    cb(null, require('./views/users').default)
-  }, 'users')
+    cb(null, require('./views/user/index').default)
+  }, 'user')
+}
+const userdoc = (location, cb) => {
+  require.ensure([], require => {
+    cb(null, require('./views/user/doc').default)
+  }, 'userdoc')
+}
+const userhosp = (location, cb) => {
+  require.ensure([], require => {
+    cb(null, require('./views/user/hosp').default)
+  }, 'userhosp')
+}
+const useradmin = (location, cb) => {
+  require.ensure([], require => {
+    cb(null, require('./views/user/admin').default)
+  }, 'useradmin')
+}
+const userdetail = (location, cb) => {
+  require.ensure([], require => {
+    cb(null, require('./views/user/detail').default)
+  }, 'userdetail')
 }
 
 const RouteConfig = (<Router history={hashHistory}>
   <Route path='/login' getComponent={login}/>
+  <Route path='/pwdfind' getComponent={pwdfind}/>
   <Route path='/' getComponent={roots}>
     <IndexRoute getComponent={index}/>
-    <Route path='/config' getComponent={config}/>
-    <Route path='/datalog' getComponent={datalog}/>
-    <Route path='/role' getComponent={role}/>
-    <Route path='/users' getComponent={users}/>
+    <Route path='user/'>
+      <IndexRoute getComponent={user}/>
+      <Route path='doc' getComponent={userdoc}/>
+      <Route path='hosp' getComponent={userhosp}/>
+      <Route path='admin' getComponent={useradmin}/>
+      <Route path='detail' getComponent={userdetail}/>
+    </Route>
 
+    <Route path='config' getComponent={config}/>
+    <Route path='datalog' getComponent={datalog}/>
+    <Route path='role' getComponent={role}/>
 
-    <Route path='/form' getComponent={form}/>
-    <Route path='/datalist' getComponent={datalist}/>
+    <Route path='form' getComponent={form}/>
+    <Route path='datalist' getComponent={datalist}/>
 
-    <Route path='/test' getComponent={test}/>
-    <Route path='/test2' getComponent={test2}/>
-    <Route path='/test3' getComponent={test3}/>
-    <Route path='/error' getComponent={error}/>
+    <Route path='test' getComponent={test}/>
+    <Route path='test2' getComponent={test2}/>
+    <Route path='test3' getComponent={test3}/>
+    <Route path='error' getComponent={error}/>
     <Route path='*' getComponent={error}/>
   </Route>
 </Router>)
