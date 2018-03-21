@@ -106,6 +106,16 @@ const userdetail = (location, cb) => {
     cb(null, require('./views/user/detail').default)
   }, 'userdetail')
 }
+const hospdetail = (location, cb) => {
+  require.ensure([], require => {
+    cb(null, require('./views/user/hospdetail').default)
+  }, 'hospdetail')
+}
+const hospedit = (location, cb) => {
+  require.ensure([], require => {
+    cb(null, require('./views/user/hospedit').default)
+  }, 'hospedit')
+}
 
 const RouteConfig = (<Router history={hashHistory}>
   <Route path='/login' getComponent={login}/>
@@ -117,7 +127,9 @@ const RouteConfig = (<Router history={hashHistory}>
       <Route path='doc' getComponent={userdoc}/>
       <Route path='hosp' getComponent={userhosp}/>
       <Route path='admin' getComponent={useradmin}/>
-      <Route path='detail' getComponent={userdetail}/>
+      <Route path='detail/:type/:id' getComponent={userdetail}/>
+      <Route path='hospdetail/:type/:id' getComponent={hospdetail}/>
+      <Route path='hospedit(/:id)' getComponent={hospedit}/>
     </Route>
 
     <Route path='config' getComponent={config}/>

@@ -6,10 +6,13 @@ import {
   Modal,
   Form,
   Input,
-  RangePicker,
+  DatePicker,
+  Row,
+  Col,
+  Icon,
   Select
 } from 'antd';
-import moment from 'moment';
+// import moment from 'moment';
 const {MonthPicker, RangePicker} = DatePicker;
 
 const dateFormat = 'YYYY/MM/DD';
@@ -30,23 +33,6 @@ for (let i = 1; i <= 46; i++) {
     status: '正常'
   });
 }
-const props = {
-  name: 'file',
-  action: '//jsonplaceholder.typicode.com/posts/',
-  headers: {
-    authorization: 'authorization-text'
-  },
-  onChange(info) {
-    if (info.file.status !== 'uploading') {
-      console.log(info.file, info.fileList);
-    }
-    if (info.file.status === 'done') {
-      message.success(`${info.file.name} file uploaded successfully`);
-    } else if (info.file.status === 'error') {
-      message.error(`${info.file.name} file upload failed.`);
-    }
-  }
-};
 export default class datalist extends Component {
   constructor() {
     super();
@@ -92,9 +78,9 @@ export default class datalist extends Component {
         title: '操作',
         key: 'action',
         render: (txt, record) => (<span className='links'>
-          <Link title='查看详情' to='/userdetail/23'><Icon type="info-circle"/></Link>
-          <a title='冻结账户' onClick={this.edit.bind(this, txt, 0)}><Icon type="lock"/></a>
-          <a title='删除账户' onClick={this.edit.bind(this, txt, 1)}><Icon type="delete"/></a>
+          <Link title='查看详情' to='/user/detail/1/23'><Icon type="info-circle"/></Link>
+          <a title='冻结账户' onClick={this.edit.bind(this, txt, '冻结')}><Icon type="lock"/></a>
+          <a title='删除账户' onClick={this.edit.bind(this, txt, '删除')}><Icon type="delete"/></a>
         </span>)
       }
     ];
@@ -108,8 +94,8 @@ export default class datalist extends Component {
     console.log(txt);
     if (type == 1) {
       Modal.confirm({
-        title: '你确定要删除此条记录?',
-        content: `序号：${txt.index}，姓名：${txt.name}`,
+        title: `您确定要${type}以下账户吗?`,
+        content: `姓名：${txt.name}`,
         okText: '确定',
         okType: 'danger',
         cancelText: '取消',
@@ -126,7 +112,7 @@ export default class datalist extends Component {
   handleSlt(e) {
     console.log(e.target.innerText);
     Modal.confirm({
-      title: '你确定要删除所选记录?',
+      title: `您确定要${e.target.innerText}以下账户吗?`,
       content: `选择项：${this.selectedRowKeys.join(',')}`,
       okText: '确定',
       okType: 'danger',
@@ -143,38 +129,78 @@ export default class datalist extends Component {
   sltStatus(value) {
     console.log(`selected ${value}`);
   }
+
+  //选择时间
+  sltTime(time, type) {
+    console.log(time);
+    console.log(type);
+  }
+
+  //获取Input内容
+  getValue(value, e) {
+    console.log(value);
+    console.log(e.target.value);
+  }
+
+  //提交表单
+  submit(e) {
+    console.log('submit');
+    e.preventDefault();
+  }
   render() {
     const {data, pagination, loading, rowSelection, dltdisabled} = this.state
     return (<div>
-      <Form className='frmbtntop'>
+      <Form className='frmbtntop text-right'>
         <Button type="danger" disabled={dltdisabled} onClick={this.handleSlt.bind(this)}>批量删除</Button>
         <Button type="danger" disabled={dltdisabled} onClick={this.handleSlt.bind(this)}>批量冻结</Button>
         <Button type="danger" disabled={dltdisabled} onClick={this.handleSlt.bind(this)}>批量解冻</Button>
         <Button>新建用户</Button>
       </Form>
-      <Form className='frmbtntop' layout="inline">
-        <FormItem label="昵称">
-          <Input placeholder='搜索昵称或姓名'/>
-        </FormItem>
-        <FormItem label="手机号">
-          <Input placeholder='搜索手机号' maxLength='11'/>
-        </FormItem>
-        <FormItem label="医院">
-          <Input placeholder='搜索医院'/>
-        </FormItem>
-        <FormItem label="创建时间">
-          <RangePicker/>
-        </FormItem>
-        <FormItem label="登录时间">
-          <RangePicker/>
-        </FormItem>
-        <FormItem label="账号状态">
-          <Select defaultValue="lucy" onChange={this.sltStatus.bind(this)}>
-            <Option value="lucy">未激活</Option>
-            <Option value="Yiminghe">正常</Option>
-            <Option value="jack">冻结</Option>
-          </Select>
-        </FormItem>
+      <Form layout="inline" className='frminput' onSubmit={this.submit.bind(this)}>
+        <Row gutter={48}>
+          <Col span={8}>
+            <FormItem label="用户昵称">
+              <Input placeholder='搜索昵称或姓名' onChange={this.getValue.bind(this, 0)}/>
+            </FormItem>
+          </Col>
+          <Col span={8}>
+            <FormItem label="手 机 号">
+              <Input placeholder='手机号' ref='phone' name='phone' maxLength='11' onChange={this.getValue.bind(this, 1)}/>
+            </FormItem>
+          </Col>
+          <Col span={8}>
+            <FormItem label="账号状态">
+              <Select defaultValue="normal" onChange={this.sltStatus.bind(this)}>
+                <Option value="nouse">未激活</Option>
+                <Option value="normal">正常</Option>
+                <Option value="frozen">冻结</Option>
+              </Select>
+            </FormItem>
+          </Col>
+        </Row>
+        <Row gutter={48}>
+          <Col span={8}>
+            <FormItem label="创建时间">
+              <RangePicker onChange={this.sltTime.bind(this, 0)} style={{
+                  width: '220px'
+                }}/>
+            </FormItem>
+          </Col>
+          <Col span={8}>
+            <FormItem label="登录时间">
+              <RangePicker onChange={this.sltTime.bind(this, 1)} style={{
+                  width: '220px'
+                }}/>
+            </FormItem>
+          </Col>
+          <Col span={8}>
+            <FormItem label="医院名称">
+              <Input placeholder='搜索医院名称' style={{
+                  width: '260px'
+                }}/>
+            </FormItem>
+          </Col>
+        </Row>
       </Form>
       <Table rowSelection={rowSelection} columns={this.columns} dataSource={data} pagination={pagination} loading={loading} onChange={this.handleTableChange.bind(this)}/>
     </div>)

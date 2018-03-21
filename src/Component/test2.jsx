@@ -1,111 +1,185 @@
 'use strict';
 import React, {Component} from 'react'
-import {
-  Picker,
-  List,
-  Carousel,
-  SearchBar,
-  WhiteSpace,
-  Modal,
-  Toast,
-  Tabs,
-  DatePicker,
-  Button
-} from 'antd-mobile'
+import {hashHistory} from 'react-router'
+import { Button, Form, Input, Row, Col } from 'antd';
+import classNames from 'classnames';
+const createForm = Form.create;
+const FormItem = Form.Item;
 
-//ui
-import 'antd-mobile/dist/antd-mobile.css';
+function noop() {
+  return false;
+}
 
-export default class test extends Component {
-  constructor() {
-    super();
-    this.state = {
-      sValue: '',
-      data: ['AiyWuByWklrrUDlFignR', 'TekJlZRVCjLFexlOCuWn', 'IJOtIlfsYdTyaDTRVrLI']
-    }
-    this.seasons = [
-      [
-        {
-          label: '2013',
-          value: '2013'
-        }, {
-          label: '2014',
-          value: '2014'
-        }
-      ],
-      [
-        {
-          label: '春',
-          value: '春'
-        }, {
-          label: '夏',
-          value: '夏'
-        }
-      ]
-    ];
-    this.tabsTitle = [
-      {
-        title: '第一个选项卡'
-      }, {
-        title: '第二个选项卡'
-      }, {
-        title: '第三个选项卡'
+let Demo = React.createClass({
+  getInitialState() {
+    return {
+      passBarShow: false, // 是否显示密码强度提示条
+      rePassBarShow: false,
+      passStrength: 'L', // 密码强度
+      rePassStrength: 'L',
+    };
+  },
+
+  handleSubmit() {
+    this.props.form.validateFields((errors, values) => {
+      if (!!errors) {
+        console.log('Errors in form!!!');
+        return;
       }
-    ];
-  }
+      console.log('Submit!!!');
+      console.log(values);
+      hashHistory.push('/');
+    });
+  },
+
+  getPassStrenth(value, type) {
+    if (value) {
+      let strength;
+      // 密码强度的校验规则自定义，这里只是做个简单的示例
+      if (value.length < 6) {
+        strength = 'L';
+      } else if (value.length <= 9) {
+        strength = 'M';
+      } else {
+        strength = 'H';
+      }
+      if (type === 'pass') {
+        this.setState({ passBarShow: true, passStrength: strength });
+      } else {
+        this.setState({ rePassBarShow: true, rePassStrength: strength });
+      }
+    } else {
+      if (type === 'pass') {
+        this.setState({ passBarShow: false });
+      } else {
+        this.setState({ rePassBarShow: false });
+      }
+    }
+  },
+
+  checkPass(rule, value, callback) {
+    const form = this.props.form;
+    this.getPassStrenth(value, 'pass');
+
+    if (form.getFieldValue('pass')) {
+      form.validateFields(['rePass'], { force: true });
+    }
+
+    callback();
+  },
+
+  checkPass2(rule, value, callback) {
+    const form = this.props.form;
+    this.getPassStrenth(value, 'rePass');
+
+    if (value && value !== form.getFieldValue('pass')) {
+      callback('两次输入密码不一致！');
+    } else {
+      callback();
+    }
+  },
+
+  renderPassStrengthBar(type) {
+    const strength = type === 'pass' ? this.state.passStrength : this.state.rePassStrength;
+    const classSet = classNames({
+      'ant-pwd-strength': true,
+      'ant-pwd-strength-low': strength === 'L',
+      'ant-pwd-strength-medium': strength === 'M',
+      'ant-pwd-strength-high': strength === 'H'
+    });
+    const level = {
+      L: '低',
+      M: '中',
+      H: '高'
+    };
+
+    return (
+      <div>
+        <ul className={classSet}>
+          <li className="ant-pwd-strength-item ant-pwd-strength-item-1"></li>
+          <li className="ant-pwd-strength-item ant-pwd-strength-item-2"></li>
+          <li className="ant-pwd-strength-item ant-pwd-strength-item-3"></li>
+          <span className="ant-form-text">
+            {level[strength]}
+          </span>
+        </ul>
+      </div>
+    );
+  },
 
   render() {
-    const {sValue, data, date} = this.state
-    const style = {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      height: '250px',
-      backgroundColor: '#fff'
-    }
-    return (<div className='test2 clearfix'>
-      <Carousel autoplay={true} infinite="infinite" selectedIndex={1} beforeChange={(from, to) => console.log(`slide from ${from} to ${to}`)} afterChange={index => console.log('slide to', index)}>
-        {
-          data.map(val => (<a key={val} href="http://www.alipay.com" className='block'>
-            <img src={`https://zos.alipayobjects.com/rmsportal/${val}.png`} style={{
-                width: '100%'
-              }}/>
-          </a>))
-        }
-      </Carousel>
-      <SearchBar placeholder="搜索关键字" maxLength={8}/>
-      <Tabs tabs={this.tabsTitle} initialPage={2} animated={false} useOnPan={false}>
-        <div style={style}>第一个选项卡内容</div>
-        <div style={style}>第二个选项卡内容</div>
-        <div style={style}>第三个选项卡内容</div>
-      </Tabs>
-      <Picker data={this.seasons} title="选择季节" cascade={false} extra="请选择(可选)" value={sValue} onChange={v => this.setState({sValue: v})} onOk={v => this.setState({sValue: v})}>
-        <List.Item arrow="horizontal">选择季节</List.Item>
-      </Picker>
-      <List className="date-picker-list" style={{
-          backgroundColor: 'white'
-        }}>
-        <DatePicker mode='date' value={date} onChange={date => this.setState({date})}>
-          <List.Item arrow="horizontal">选择时间</List.Item>
-        </DatePicker>
-      </List>
+    const { getFieldProps } = this.props.form;
 
-      <WhiteSpace/>
-      <WhiteSpace/>
-      <WhiteSpace/>
-      <WhiteSpace/>
-      <Button type="warning" onClick={() => Modal.alert('删除文件', '你确定删除该文件吗？', [
-          {
-            text: '取消',
-            onPress: () => console.log('cancel')
-          }, {
-            text: '确定',
-            onPress: () => new Promise((resolve) => {
-              Toast.info('点击了确定', 1);
-              resolve();
-            })
-          }
-        ])}>删除文件</Button>
-    </div>)
+    const passProps = getFieldProps('pass', {
+      rules: [
+        { required: true, whitespace: true, message: '请填写密码' },
+        { validator: this.checkPass }
+      ]
+    });
+    const rePassProps = getFieldProps('rePass', {
+      rules: [{
+        required: true,
+        whitespace: true,
+        message: '请再次输入密码',
+      }, {
+        validator: this.checkPass2,
+      }],
+    });
+    const formItemLayout = {
+      labelCol: { span: 6 },
+      wrapperCol: { span: 18 },
+    };
+    return (
+      <div>
+        <Form horizontal form={this.props.form}>
+          <Row>
+            <Col span="18">
+              <FormItem
+                {...formItemLayout}
+                label="密码：">
+                <Input {...passProps} type="password"
+                  onContextMenu={noop} onPaste={noop} onCopy={noop} onCut={noop}
+                  autoComplete="off" id="pass"
+                />
+              </FormItem>
+            </Col>
+            <Col span="6">
+              {this.state.passBarShow ? this.renderPassStrengthBar('pass') : null}
+            </Col>
+          </Row>
+
+          <Row>
+            <Col span="18">
+              <FormItem
+                {...formItemLayout}
+                label="确认密码：">
+                <Input {...rePassProps} type="password"
+                  onContextMenu={noop} onPaste={noop} onCopy={noop} onCut={noop}
+                  autoComplete="off" id="rePass"
+                />
+              </FormItem>
+            </Col>
+            <Col span="6">
+              {this.state.rePassBarShow ? this.renderPassStrengthBar('rePass') : null}
+            </Col>
+          </Row>
+          <Row>
+            <Col span="18">
+              <Col span="18" offset="6">
+                <Button type="primary" onClick={this.handleSubmit}>提交</Button>
+              </Col>
+            </Col>
+          </Row>
+        </Form>
+      </div>
+    );
+  }
+});
+
+Demo = createForm()(Demo);
+
+export default class form extends Component{
+  render(){
+    return <Demo/>
   }
 }

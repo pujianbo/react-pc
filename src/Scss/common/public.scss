@@ -1,13 +1,21 @@
 @import "quote.scss"; //public
-#main .publicbox {
-  position: fixed;
-  left: $menuWidth;
-  top: $headerHeight;
-  bottom: 0;
-  right: 0;
-  padding: 20px;
-  overflow: auto;
-  background-color: #f0f2f5;;
+#main{
+  .publicbox {
+    position: fixed;
+    left: $menuWidth;
+    top: $headerHeight;
+    bottom: 0;
+    right: 0;
+    padding: 20px;
+    overflow: auto;
+    background-color: #f0f2f5;;
+  }
+  .cred{
+    color: $colorRed;
+  }
+  .cgreen{
+    color: $colorGreen;
+  }
 }
 
 .task {

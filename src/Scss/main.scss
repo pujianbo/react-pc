@@ -1,44 +1,87 @@
-.login {
-  display: -webkit-flex;
-  display: -ms-flex;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  height: 100vh;
-  background-color: #eee;
+#main {
+  .login {
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    height: 100vh;
+    background-color: #eee;
 
-  .loginbox {
-    display: inline-block;
-    background: #fff;
-    width: 300px;
-    margin: 0 auto;
-    padding: 20px;
-    border-radius: 6px;
-    .item{
-      margin-bottom: 30px;
-    }
-    .logobox{
-      font-size: 20px;
-      img{
-        height: 30px;
-        margin-right: 10px;
+    .loginbox {
+      display: inline-block;
+      background: #fff;
+      width: 300px;
+      margin: 0 auto;
+      padding: 20px;
+      border-radius: 6px;
+
+      .item {
+        margin-bottom: 30px;
       }
-      span{
-        padding-top: 4px;
+
+      .logobox {
+        font-size: 20px;
+
+        img {
+          height: 30px;
+          margin-right: 10px;
+        }
+
+        span {
+          padding-top: 4px;
+        }
       }
     }
   }
-}
-.ant-table{
-  background-color: #fff;
-}
-.links a{
-  margin-right: 6px;
-}
-.frmbtntop{
-  text-align: right;
-  padding-bottom: 20px;
-  .ant-btn{
-    margin-right: 10px;
+
+  .ant-table {
+    background-color: #fff;
+  }
+
+  .links a {
+    margin-right: 6px;
+  }
+
+  .frmbtntop {
+    padding-bottom: 20px;
+
+    .ant-btn {
+      margin-right: 10px;
+    }
+  }
+  .frminput{
+    background: #fff;
+    border-radius: 6px;
+    padding: 12px 20px;
+    margin-bottom: 15px;
+  }
+  .tbdetail{
+    background-color: #fff;
+    padding: 20px;
+    .tbbar{
+      border-bottom: 1px solid #ddd;
+      padding: 20px 0 6px;
+      font-size: 1.2em;
+      margin-bottom: 6px;
+    }
+    th,td{
+      padding: 6px 10px;
+      &:first-child{
+        white-space: nowrap;
+      }
+    }
+    .tbtitle{
+      white-space: nowrap;
+    }
+    .istus{
+      margin-left: 8px;
+    }
+    .imglink{
+      display: block;
+      img{
+        max-width: 300px;
+      }
+    }
   }
 }

@@ -1,6 +1,8 @@
 'user strict';
 import React, {Component} from 'react'
 import {hashHistory} from 'react-router'
+import zhCN from 'antd/lib/locale-provider/zh_CN';
+import {LocaleProvider} from 'antd';
 
 import Header from './header'
 import Menu from './menu'
@@ -16,7 +18,9 @@ export default class roots extends Component {
     return (<div className='content'>
       <Header/>
       <Menu/>
-      <div className='publicbox'>{this.props.children}</div>
+      <div className='publicbox'>
+        <LocaleProvider locale={zhCN}>{this.props.children}</LocaleProvider>
+      </div>
     </div>);
   }
 }
