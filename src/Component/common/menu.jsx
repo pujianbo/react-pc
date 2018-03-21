@@ -18,29 +18,30 @@ export default class menu extends Component {
     return (<div className='menu clearfix'>
       <div className='menubox'>
         <Menu onClick={this.handleClick.bind(this)} defaultOpenKeys={[localStorage.syskeyPath]} defaultSelectedKeys={[defaultKey]} mode="inline">
-          <SubMenu key="team" title={<span> <Icon type="team" /><span>账户管理</span></span>}>
-            <Menu.Item key="user/">普通账户</Menu.Item>
-            <Menu.Item key="user/doc">医生账户</Menu.Item>
-            <Menu.Item key="user/hosp">医院账户</Menu.Item>
-            <Menu.Item key="user/admin">后台账户</Menu.Item>
+          <SubMenu key="account" title={<span> <Icon type="key" /><span>账户管理</span></span>}>
+            <Menu.Item key="account/">普通账户</Menu.Item>
+            <Menu.Item key="account/doc">医生账户</Menu.Item>
+            <Menu.Item key="account/hosp">医院账户</Menu.Item>
+            <Menu.Item key="account/admin">后台账户</Menu.Item>
           </SubMenu>
-          <SubMenu key="sys" title={<span> <Icon type="setting" /><span>系统管理</span></span>}>
-            <Menu.Item key="config">网站配置</Menu.Item>
-            <Menu.Item key="role">角色管理</Menu.Item>
-            <Menu.Item key="users">用户管理</Menu.Item>
-            <Menu.Item key="datalog">系统日志</Menu.Item>
+          <SubMenu key="team" title={<span> <Icon type="team" /><span>单位管理</span></span>}>
+            <Menu.Item key="team/unit">单位管理</Menu.Item>
+            <Menu.Item key="team/group">分组管理</Menu.Item>
+            <Menu.Item key="team/person">人员管理</Menu.Item>
+          </SubMenu>
+          <SubMenu key="data" title={<span> <Icon type="database" /><span>数据库管理</span></span>}>
+            <Menu.Item key="9">数据库备份</Menu.Item>
+            <Menu.Item key="10">数据库重置</Menu.Item>
           </SubMenu>
           <SubMenu key="statistics" title={<span> <Icon type="line-chart" /><span>网站统计</span></span>}>
             <Menu.Item key="7">登录统计</Menu.Item>
             <Menu.Item key="8">购买统计</Menu.Item>
           </SubMenu>
-          <SubMenu key="data" title={<span> <Icon type="database" /><span>数据分析</span></span>}>
-            <Menu.Item key="9">用户新增分析</Menu.Item>
-            <Menu.Item key="10">模块使用分析</Menu.Item>
-          </SubMenu>
-          <SubMenu key="doctor" title={<span> <Icon type="star" /><span>模板使用</span></span>}>
-            <Menu.Item key="form">表单提交</Menu.Item>
-            <Menu.Item key="datalist">数据列表</Menu.Item>
+          <SubMenu key="system" title={<span> <Icon type="setting" /><span>系统管理</span></span>}>
+            <Menu.Item key="system/config">系统配置</Menu.Item>
+            <Menu.Item key="system/version">版本管理</Menu.Item>
+            <Menu.Item key="system/datalog">系统日志</Menu.Item>
+            <Menu.Item key="system/feedback">反馈信息</Menu.Item>
           </SubMenu>
         </Menu>
       </div>

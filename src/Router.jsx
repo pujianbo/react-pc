@@ -66,54 +66,80 @@ const pwdfind = (location, cb) => {
     cb(null, require('./views/pwdfind').default)
   }, 'pwdfind')
 }
+
+//system moudle
 const config = (location, cb) => {
   require.ensure([], require => {
-    cb(null, require('./views/config').default)
+    cb(null, require('./views/system/config').default)
   }, 'config')
 }
 const datalog = (location, cb) => {
   require.ensure([], require => {
-    cb(null, require('./views/datalog').default)
+    cb(null, require('./views/system/datalog').default)
   }, 'datalog')
 }
-const role = (location, cb) => {
+const version = (location, cb) => {
   require.ensure([], require => {
-    cb(null, require('./views/role').default)
-  }, 'role')
+    cb(null, require('./views/system/version').default)
+  }, 'version')
 }
-const user = (location, cb) => {
+const feedback = (location, cb) => {
   require.ensure([], require => {
-    cb(null, require('./views/user/index').default)
-  }, 'user')
+    cb(null, require('./views/system/feedback').default)
+  }, 'feedback')
 }
-const userdoc = (location, cb) => {
+
+//team moudle
+const group = (location, cb) => {
   require.ensure([], require => {
-    cb(null, require('./views/user/doc').default)
-  }, 'userdoc')
+    cb(null, require('./views/team/group').default)
+  }, 'group')
 }
-const userhosp = (location, cb) => {
+const person = (location, cb) => {
   require.ensure([], require => {
-    cb(null, require('./views/user/hosp').default)
-  }, 'userhosp')
+    cb(null, require('./views/team/person').default)
+  }, 'person')
 }
-const useradmin = (location, cb) => {
+const unit = (location, cb) => {
   require.ensure([], require => {
-    cb(null, require('./views/user/admin').default)
-  }, 'useradmin')
+    cb(null, require('./views/team/unit').default)
+  }, 'unit')
 }
-const userdetail = (location, cb) => {
+
+//account moudle
+const account = (location, cb) => {
   require.ensure([], require => {
-    cb(null, require('./views/user/detail').default)
-  }, 'userdetail')
+    cb(null, require('./views/account/index').default)
+  }, 'account')
+}
+const accountdoc = (location, cb) => {
+  require.ensure([], require => {
+    cb(null, require('./views/account/doc').default)
+  }, 'accountdoc')
+}
+const accounthosp = (location, cb) => {
+  require.ensure([], require => {
+    cb(null, require('./views/account/hosp').default)
+  }, 'accounthosp')
+}
+const accountadmin = (location, cb) => {
+  require.ensure([], require => {
+    cb(null, require('./views/account/admin').default)
+  }, 'accountadmin')
+}
+const accountdetail = (location, cb) => {
+  require.ensure([], require => {
+    cb(null, require('./views/account/detail').default)
+  }, 'accountdetail')
 }
 const hospdetail = (location, cb) => {
   require.ensure([], require => {
-    cb(null, require('./views/user/hospdetail').default)
+    cb(null, require('./views/account/hospdetail').default)
   }, 'hospdetail')
 }
 const hospedit = (location, cb) => {
   require.ensure([], require => {
-    cb(null, require('./views/user/hospedit').default)
+    cb(null, require('./views/account/hospedit').default)
   }, 'hospedit')
 }
 
@@ -122,19 +148,31 @@ const RouteConfig = (<Router history={hashHistory}>
   <Route path='/pwdfind' getComponent={pwdfind}/>
   <Route path='/' getComponent={roots}>
     <IndexRoute getComponent={index}/>
-    <Route path='user/'>
-      <IndexRoute getComponent={user}/>
-      <Route path='doc' getComponent={userdoc}/>
-      <Route path='hosp' getComponent={userhosp}/>
-      <Route path='admin' getComponent={useradmin}/>
-      <Route path='detail/:type/:id' getComponent={userdetail}/>
+
+    <Route path='account/'>
+      <IndexRoute getComponent={account}/>
+      <Route path='doc' getComponent={accountdoc}/>
+      <Route path='hosp' getComponent={accounthosp}/>
+      <Route path='admin' getComponent={accountadmin}/>
+      <Route path='detail/:type/:id' getComponent={accountdetail}/>
       <Route path='hospdetail/:type/:id' getComponent={hospdetail}/>
       <Route path='hospedit(/:id)' getComponent={hospedit}/>
     </Route>
 
-    <Route path='config' getComponent={config}/>
-    <Route path='datalog' getComponent={datalog}/>
-    <Route path='role' getComponent={role}/>
+    <Route path='system/'>
+      <IndexRoute getComponent={config}/>
+      <Route path='config' getComponent={config}/>
+      <Route path='version' getComponent={version}/>
+      <Route path='feedback' getComponent={feedback}/>
+      <Route path='datalog' getComponent={datalog}/>
+    </Route>
+
+    <Route path='team/'>
+      <IndexRoute getComponent={unit}/>
+      <Route path='unit' getComponent={unit}/>
+      <Route path='person' getComponent={person}/>
+      <Route path='unit' getComponent={unit}/>
+    </Route>
 
     <Route path='form' getComponent={form}/>
     <Route path='datalist' getComponent={datalist}/>

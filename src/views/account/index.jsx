@@ -78,7 +78,7 @@ export default class datalist extends Component {
         title: '操作',
         key: 'action',
         render: (txt, record) => (<span className='links'>
-          <Link title='查看详情' to='/user/detail/1/23'><Icon type="info-circle"/></Link>
+          <Link title='查看详情' to='/account/detail/1/23'><Icon type="info-circle"/></Link>
           <a title='冻结账户' onClick={this.edit.bind(this, txt, '冻结')}><Icon type="lock"/></a>
           <a title='删除账户' onClick={this.edit.bind(this, txt, '删除')}><Icon type="delete"/></a>
         </span>)
