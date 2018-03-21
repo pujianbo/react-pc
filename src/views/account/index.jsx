@@ -10,11 +10,14 @@ import {
   Row,
   Col,
   Icon,
-  Select
+  Select,
+  Tabs,
+  Upload,
+  message
 } from 'antd';
 // import moment from 'moment';
 const {MonthPicker, RangePicker} = DatePicker;
-
+const TabPane = Tabs.TabPane;
 const dateFormat = 'YYYY/MM/DD';
 const monthFormat = 'YYYY/MM';
 const FormItem = Form.Item;
@@ -33,6 +36,23 @@ for (let i = 1; i <= 46; i++) {
     status: '正常'
   });
 }
+const props = {
+  name: 'file',
+  action: '//jsonplaceholder.typicode.com/posts/',
+  headers: {
+    authorization: 'authorization-text'
+  },
+  onChange(info) {
+    if (info.file.status !== 'uploading') {
+      console.log(info.file, info.fileList);
+    }
+    if (info.file.status === 'done') {
+      message.success(`${info.file.name} file uploaded successfully`);
+    } else if (info.file.status === 'error') {
+      message.error(`${info.file.name} file upload failed.`);
+    }
+  }
+};
 export default class datalist extends Component {
   constructor() {
     super();
@@ -41,6 +61,7 @@ export default class datalist extends Component {
       loading: false,
       data,
       dltdisabled: true,
+      visible: false,
       pagination: {
         current: 1,
         pageSize: 10,
@@ -92,21 +113,19 @@ export default class datalist extends Component {
 
   edit(txt, type) {
     console.log(txt);
-    if (type == 1) {
-      Modal.confirm({
-        title: `您确定要${type}以下账户吗?`,
-        content: `姓名：${txt.name}`,
-        okText: '确定',
-        okType: 'danger',
-        cancelText: '取消',
-        onOk() {
-          console.log('OK');
-        },
-        onCancel() {
-          console.log('Cancel');
-        }
-      });
-    }
+    Modal.confirm({
+      title: `您确定要${type}以下账户吗?`,
+      content: `姓名：${txt.name}`,
+      okText: '确定',
+      okType: 'danger',
+      cancelText: '取消',
+      onOk() {
+        console.log('OK');
+      },
+      onCancel() {
+        console.log('Cancel');
+      }
+    });
   }
   //批量操作
   handleSlt(e) {
@@ -147,14 +166,33 @@ export default class datalist extends Component {
     console.log('submit');
     e.preventDefault();
   }
+  //新建账户弹框
+  addAccount() {
+    this.setState({visible: true})
+  }
+
+  handleCancel() {
+    this.setState({visible: false})
+  }
+  handleOk(e) {
+    e.preventDefault();
+  }
+
   render() {
-    const {data, pagination, loading, rowSelection, dltdisabled} = this.state
+    const {
+      data,
+      pagination,
+      loading,
+      visible,
+      rowSelection,
+      dltdisabled
+    } = this.state
     return (<div>
       <Form className='frmbtntop text-right'>
-        <Button type="danger" disabled={dltdisabled} onClick={this.handleSlt.bind(this)}>批量删除</Button>
         <Button type="danger" disabled={dltdisabled} onClick={this.handleSlt.bind(this)}>批量冻结</Button>
         <Button type="danger" disabled={dltdisabled} onClick={this.handleSlt.bind(this)}>批量解冻</Button>
-        <Button>新建用户</Button>
+        <Button type="danger" disabled={dltdisabled} onClick={this.handleSlt.bind(this)}>批量删除</Button>
+        <Button onClick={this.addAccount.bind(this)}>新建用户</Button>
       </Form>
       <Form layout="inline" className='frminput' onSubmit={this.submit.bind(this)}>
         <Row gutter={48}>
@@ -164,7 +202,7 @@ export default class datalist extends Component {
             </FormItem>
           </Col>
           <Col span={8}>
-            <FormItem label="手 机 号">
+            <FormItem label="手机号码">
               <Input placeholder='手机号' ref='phone' name='phone' maxLength='11' onChange={this.getValue.bind(this, 1)}/>
             </FormItem>
           </Col>
@@ -202,6 +240,37 @@ export default class datalist extends Component {
           </Col>
         </Row>
       </Form>
+      <Modal visible={visible} title="新建用户" onCancel={this.handleCancel.bind(this)} footer={[
+          <Button key="back" onClick={this.handleCancel.bind(this)}>取消</Button>,
+          <Button key="submit" type="primary" loading={loading} onClick={this.handleOk.bind(this)}>
+            确定
+          </Button>
+        ]}>
+        <Form onSubmit={this.handleOk.bind(this)}>
+          <Tabs defaultActiveKey="1">
+            <TabPane tab="单个新增" key="1">
+              <FormItem label="手机号">
+                <Input placeholder="输入新建用户的手机号"/>
+                <p className='cgreen'>确定后将发送随机登录密码到手机</p>
+              </FormItem>
+            </TabPane>
+            <TabPane tab="批量新增" key="2">
+              <FormItem label="下载模板">
+                <Button>下载模板</Button>
+                <span className='cgreen' style={{marginLeft:'10px'}}>(请务必按模板格式填写)</span>
+              </FormItem>
+              <FormItem label="上传传模板">
+                <Upload {...props}>
+                  <Button>
+                    <Icon type="upload"/>
+                    选择文件
+                  </Button>
+                </Upload>
+              </FormItem>
+            </TabPane>
+          </Tabs>
+        </Form>
+      </Modal>
       <Table rowSelection={rowSelection} columns={this.columns} dataSource={data} pagination={pagination} loading={loading} onChange={this.handleTableChange.bind(this)}/>
     </div>)
   }

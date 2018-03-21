@@ -1,5 +1,6 @@
 @import "quote.scss"; //public
-#main{
+
+#main {
   .publicbox {
     position: fixed;
     left: $menuWidth;
@@ -8,14 +9,16 @@
     right: 0;
     padding: 20px;
     overflow: auto;
-    background-color: #f0f2f5;;
+    background-color: #f0f2f5;
   }
-  .cred{
-    color: $colorRed;
-  }
-  .cgreen{
-    color: $colorGreen;
-  }
+}
+
+.cred {
+  color: $colorRed;
+}
+
+.cgreen {
+  color: $colorGreen;
 }
 
 .task {

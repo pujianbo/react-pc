@@ -74,8 +74,8 @@ export default class header extends Component {
           </a>
         </Dropdown>
       </div>
-      <Modal visible={visible} title="修改密码" onOk={this.handleOk} onCancel={this.handleCancel.bind(this)} footer={[
-          <Button key="back" onClick={this.handleCancel}>取消</Button>,
+      <Modal visible={visible} title="修改密码" onCancel={this.handleCancel.bind(this)} footer={[
+          <Button key="back" onClick={this.handleCancel.bind(this)}>取消</Button>,
           <Button key="submit" type="primary" loading={loading} onClick={this.handleOk.bind(this)}>
             确定
           </Button>
