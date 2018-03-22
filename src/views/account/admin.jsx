@@ -249,30 +249,16 @@ export default class datalist extends Component {
           </Button>
         ]}>
         <Form onSubmit={this.handleOk.bind(this)}>
-          <Tabs defaultActiveKey="1">
-            <TabPane tab="单个新增" key="1">
-              <FormItem label="手机号">
-                <Input placeholder="输入新建用户的手机号"/>
-                <p className='cgreen'>确定后将发送随机登录密码到手机</p>
-              </FormItem>
-            </TabPane>
-            <TabPane tab="批量新增" key="2">
-              <FormItem label="下载模板">
-                <Button>下载模板</Button>
-                <span className='cgreen' style={{
-                    marginLeft: '10px'
-                  }}>(请务必按模板格式填写)</span>
-              </FormItem>
-              <FormItem label="上传传模板">
-                <Upload {...props}>
-                  <Button>
-                    <Icon type="upload"/>
-                    选择文件
-                  </Button>
-                </Upload>
-              </FormItem>
-            </TabPane>
-          </Tabs>
+          <FormItem label="手机号">
+            <Input placeholder="输入新建用户的手机号"/>
+            <p className='cgreen'>确定后将发送随机登录密码到手机</p>
+          </FormItem>
+          <FormItem label="角色">
+            <Select defaultValue="chaoguan">
+              <Option value="chaoguan">超管</Option>
+              <Option value="normal">普通管理员</Option>
+            </Select>
+          </FormItem>
         </Form>
       </Modal>
       <Table rowSelection={rowSelection} columns={this.columns} dataSource={data} pagination={pagination} loading={loading} onChange={this.handleTableChange.bind(this)}/>

@@ -90,11 +90,6 @@ const feedback = (location, cb) => {
 }
 
 //team moudle
-const group = (location, cb) => {
-  require.ensure([], require => {
-    cb(null, require('./views/team/group').default)
-  }, 'group')
-}
 const person = (location, cb) => {
   require.ensure([], require => {
     cb(null, require('./views/team/person').default)
@@ -104,6 +99,11 @@ const unit = (location, cb) => {
   require.ensure([], require => {
     cb(null, require('./views/team/unit').default)
   }, 'unit')
+}
+const group = (location, cb) => {
+  require.ensure([], require => {
+    cb(null, require('./views/team/group').default)
+  }, 'group')
 }
 
 //account moudle
@@ -171,7 +171,7 @@ const RouteConfig = (<Router history={hashHistory}>
       <IndexRoute getComponent={unit}/>
       <Route path='unit' getComponent={unit}/>
       <Route path='person' getComponent={person}/>
-      <Route path='unit' getComponent={unit}/>
+      <Route path='group(/:groupid)' getComponent={group}/>
     </Route>
 
     <Route path='form' getComponent={form}/>

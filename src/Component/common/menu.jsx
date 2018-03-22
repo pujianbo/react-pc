@@ -24,8 +24,8 @@ export default class menu extends Component {
             <Menu.Item key="account/hosp">医院账户</Menu.Item>
             <Menu.Item key="account/admin">后台账户</Menu.Item>
           </SubMenu>
-          <SubMenu key="team" title={<span> <Icon type="team" /><span>单位管理</span></span>}>
-            <Menu.Item key="team/unit">单位管理</Menu.Item>
+          <SubMenu key="team" title={<span> <Icon type="team" /><span>医院管理</span></span>}>
+            <Menu.Item key="account/hospdetail/1/23">医院信息</Menu.Item>
             <Menu.Item key="team/group">分组管理</Menu.Item>
             <Menu.Item key="team/person">人员管理</Menu.Item>
           </SubMenu>
