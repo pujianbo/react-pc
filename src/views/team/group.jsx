@@ -15,6 +15,7 @@ import {
   Upload,
   message
 } from 'antd';
+import moment from 'moment'
 // import moment from 'moment';
 const {MonthPicker, RangePicker} = DatePicker;
 const TabPane = Tabs.TabPane;
@@ -87,6 +88,8 @@ export default class datalist extends Component {
         </span>)
       }
     ];
+    //测试
+    console.log(moment(1521690772000).format('YYYY-MM-DD HH:mm'))
   }
   handleTableChange(pagination, filters, sorter) {
     this.setState({pagination})
