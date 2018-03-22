@@ -170,8 +170,8 @@ const RouteConfig = (<Router history={hashHistory}>
     <Route path='team/'>
       <IndexRoute getComponent={unit}/>
       <Route path='unit' getComponent={unit}/>
-      <Route path='person' getComponent={person}/>
-      <Route path='group(/:groupid)' getComponent={group}/>
+      <Route path='person(/:groupid)' getComponent={person}/>
+      <Route path='group' getComponent={group}/>
     </Route>
 
     <Route path='form' getComponent={form}/>

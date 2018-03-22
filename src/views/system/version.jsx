@@ -206,13 +206,16 @@ export default class datalist extends Component {
           </Button>
         ]}>
         <Form onSubmit={this.handleOk.bind(this)}>
+          {/*<FormItem label="版本序号">
+            <Input placeholder='输入版本序号' />
+          </FormItem>*/}
           <FormItem label="上传文件">
             <Upload>
               <Button>选择文件</Button>
             </Upload>
           </FormItem>
-          <FormItem label="回复内容">
-            <TextArea placeholder="输入回复内容" autosize={{
+          <FormItem label="版本描述">
+            <TextArea placeholder="输入版本描述" autosize={{
                 minRows: 3
               }}/>
           </FormItem>

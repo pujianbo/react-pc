@@ -150,7 +150,12 @@ export default class datalist extends Component {
   }
   //新建账户弹框
   addGroup(txt) {
-    console.log(txt);
+    setTimeout(() => {
+      document.querySelector('#groupname').value = '';
+      if (txt.name)
+        document.querySelector('#groupname').value = txt.name
+    }, 200)
+
     this.setState({visible: true})
   }
 
@@ -183,7 +188,7 @@ export default class datalist extends Component {
         ]}>
         <Form onSubmit={this.handleOk.bind(this)}>
           <FormItem label="分组名称">
-            <Input placeholder="输入分组名称"/>
+            <Input placeholder="输入分组名称" id='groupname' ref='groupname'/>
           </FormItem>
         </Form>
       </Modal>
