@@ -90,6 +90,9 @@ export default class datalist extends Component {
     ];
     //测试
     console.log(moment(1521690772000).format('YYYY-MM-DD HH:mm'))
+    console.log(moment(1521690772000).unix()*1000)
+    console.log(moment(1521690772000).days())
+    console.log(moment(1521690772000).dayOfYear())
   }
   handleTableChange(pagination, filters, sorter) {
     this.setState({pagination})
@@ -189,7 +192,7 @@ export default class datalist extends Component {
             确定
           </Button>
         ]}>
-        <Form onSubmit={this.handleOk.bind(this)}>
+        <Form onSubmit={this.handleOk.bind(this)} >
           <FormItem label="分组名称">
             <Input placeholder="输入分组名称" id='groupname' ref='groupname'/>
           </FormItem>
