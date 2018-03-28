@@ -10,8 +10,8 @@ import './scss/common/media.scss'
 import './scss/common/public.scss'
 import './scss/main.scss'
 
-//引入插件样式
-// import 'antd/lib/button/style';
+//引入插件全部样式
+import 'antd/dist/antd.css';
 
 //引入vconsole调试
 // import './static/js/vconsole.js'

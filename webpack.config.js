@@ -7,7 +7,7 @@ var publicPath = 'dist/'; //服务器路径
 
 module.exports = {
   entry: {
-    index: ['./src/index']
+    index: ['babel-polyfill','./src/index']
   },
   output: {
     // publicPath: publicPath, //服务器路径
@@ -36,7 +36,7 @@ module.exports = {
           cacheDirectory: true,
           plugins: ['transform-runtime', ['import', [{
             libraryName: 'antd',
-            style: true
+            style: false
           }]]],
           presets: ['es2015', 'react', 'stage-0']
         }
